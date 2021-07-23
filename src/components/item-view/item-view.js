@@ -20,7 +20,6 @@ class ItemView extends Component {
         } else {
             console.log('Загрузка со стейта')
         }
-            
     }
 
     render () {

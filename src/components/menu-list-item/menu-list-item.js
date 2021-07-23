@@ -4,7 +4,6 @@ import {withRouter} from 'react-router-dom'
 
 class MenuListItem extends Component {
     
-    
     render() {
         const {menuItem, itemId} = this.props
         const {title, price, url, category} = menuItem;
@@ -31,7 +30,10 @@ class MenuListItem extends Component {
                             this.props.history.push(`/menu/${itemId}`)
                         }}
                         >View</button>   
-                    <button className="menu__btn">Add to cart</button>
+                    <button 
+                        className="menu__btn"
+                        onClick = {() => this.props.onAddToCard(itemId)}
+                        >Add to cart</button>
                 </div>
             </li>
         )

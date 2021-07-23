@@ -14,11 +14,28 @@ const menuRequested = () => {
 const menuError = () => {
     return {
         type : 'MENU_ERROR',
+        
+    };
+};
+
+const addToCard = (newCart) => {
+    return {
+        type : 'ADD_TOCART',
+        cartList : newCart
+    };
+};
+
+const deleteFromCard = (newCart) => {
+    return {
+        type : 'DELETE_FROMCART',
+        cartList : newCart
     };
 };
 
 export {
     menuLoaded,
     menuRequested,
-    menuError
+    menuError, 
+    addToCard,
+    deleteFromCard
 }
