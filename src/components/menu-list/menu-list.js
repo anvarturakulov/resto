@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MenuListItem from '../menu-list-item';
 import {connect} from 'react-redux';
 import WithRestoService from '../hoc';
-import {menuLoaded, menuRequested, menuError, addToCard} from '../../actions'
+import {menuLoaded, menuRequested, menuError, addItemToCart} from '../../actions'
 import Spinner from '../spinner'
 import Error from '../error'
 
@@ -19,18 +19,8 @@ class MenuList extends Component {
             
     }
 
-    onAddToCard = (itemId) => {
-        const {cartItems, menuItems} = this.props;
-        const itemFromCart = cartItems.find(item => item.id === itemId)
-        if (itemFromCart === undefined) {
-            const currentItem = menuItems.find(item => item.id === itemId);
-            cartItems.push(currentItem);
-            this.props.addToCard(cartItems)
-        }
-    }
-
     render() {
-        const {menuItems, loading, error} = this.props;
+        const {menuItems, loading, error, addItemToCart} = this.props;
 
         if (loading) return <Spinner/> 
         if (error)   return <Error/>
@@ -43,7 +33,7 @@ class MenuList extends Component {
                             key = {menuItem.id}
                             itemId = {menuItem.id}
                             menuItem = {menuItem}
-                            onAddToCard = {this.onAddToCard}/>
+                            onAddItemToCart = {addItemToCart}/>
                     })
                 }
             </ul>
@@ -64,7 +54,8 @@ const mapDispatchToProps = {
     menuLoaded,
     menuRequested,
     menuError,
-    addToCard
+    addItemToCart
+    
 }
 
 export default WithRestoService()(connect(mapStateToProps,mapDispatchToProps)(MenuList));

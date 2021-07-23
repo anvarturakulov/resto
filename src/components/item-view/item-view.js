@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import './item-view.scss';
 import {connect} from 'react-redux';
-import {menuLoaded, menuRequested, menuError} from '../../actions'
+import {menuLoaded, menuRequested, menuError, addItemToCart} from '../../actions'
 import WithRestoService from '../hoc';
 import Spinner from '../spinner'
 
-
 class ItemView extends Component {
-
     componentDidMount() {
         const {menuItems} = this.props;
         if (menuItems.length === 0) {
@@ -22,8 +20,11 @@ class ItemView extends Component {
         }
     }
 
+    addToCart = (id) =>{
+        this.props.addItemToCart(id)
+    }
+
     render () {
-      
         if (this.props.loading) {
             return (
                 <div className="view__item">
@@ -31,7 +32,6 @@ class ItemView extends Component {
                 </div>
             )
         }
-
         const {menuItems, itemId} = this.props;
         let currentItem = menuItems.find(item => {
             return item.id === +itemId
@@ -55,7 +55,9 @@ class ItemView extends Component {
                     <div className="view__title">{title}</div>
                     <div className="view__category">Category: <span>{category}</span></div>
                     <div className="view__price">Price: <span>{price}$</span></div>
-                    <button className="view__btn">Add to cart</button>
+                    <button className="view__btn"
+                            onClick = {() => this.props.addItemToCart(+itemId)}
+                    >Add to cart</button>
                 </div>
             </div>
         )
@@ -73,7 +75,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     menuLoaded,
     menuRequested,
-    menuError
+    menuError,
+    addItemToCart
 }
 
 export default WithRestoService()(connect(mapStateToProps,mapDispatchToProps)(ItemView));

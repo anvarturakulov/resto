@@ -2,7 +2,8 @@ const initialState = {
     menu : [],
     cart : [],
     loading:true,
-    error: false
+    error: false,
+    totalPrice : 0
 }
 
 const reducer = (state = initialState, action) => {
@@ -26,15 +27,56 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 error:true
             };
-        case 'ADD_TOCART':
-            return {
-                ...state,
-                cart : action.cartList
+        case 'ADD_ITEM_TO_CART':
+            const id = action.payload
+            const itemInd = state.cart.findIndex(item => item.id === id)
+
+            if (itemInd >=0) {
+                const itemInCart = state.cart.find(item => item.id === id)
+                const newItem = {
+                    ...itemInCart,
+                    qtty : ++itemInCart.qtty
+                }
+                return {
+                    ...state,
+                    cart : [
+                        ...state.cart.slice(0, itemInd),
+                        newItem,
+                        ...state.cart.slice(itemInd + 1)
+                    ],
+                    totalPrice : state.totalPrice + newItem.price
+                }
+            }
+
+            const item = state.menu.find(item => item.id === id)
+            const newItem = {
+                title : item.title,
+                price : item.price,
+                url : item.url,
+                id : item.id,
+                qtty : 1
             };
-        case 'DELETE_FROMCART':
+
             return {
                 ...state,
-                cart : action.cartList
+                cart : [
+                        ...state.cart,
+                        newItem
+                    ],
+                totalPrice : state.totalPrice + newItem.price
+            }
+
+        case 'DELETE_ITEM_FROM_CART':
+            const idx = action.payload
+            const index = state.cart.findIndex(item => item.id === idx)
+            const itemDel = state.cart.find(item => item.id === idx)
+            return {
+                ...state,
+                cart : [
+                    ...state.cart.slice(0, index),
+                    ...state.cart.slice(index+1)
+                ],
+                totalPrice : state.totalPrice - itemDel.price*itemDel.qtty
             };
         default : 
             return state;

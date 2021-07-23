@@ -32,7 +32,7 @@ class MenuListItem extends Component {
                         >View</button>   
                     <button 
                         className="menu__btn"
-                        onClick = {() => this.props.onAddToCard(itemId)}
+                        onClick = {() => this.props.onAddItemToCart(itemId)}
                         >Add to cart</button>
                 </div>
             </li>

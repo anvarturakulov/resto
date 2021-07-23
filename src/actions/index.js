@@ -14,21 +14,20 @@ const menuRequested = () => {
 const menuError = () => {
     return {
         type : 'MENU_ERROR',
-        
     };
 };
 
-const addToCard = (newCart) => {
+const addItemToCart = (itemId) => {
     return {
-        type : 'ADD_TOCART',
-        cartList : newCart
+        type : 'ADD_ITEM_TO_CART',
+        payload : itemId
     };
 };
 
-const deleteFromCard = (newCart) => {
+const deleteItemFromCart = (itemId) => {
     return {
-        type : 'DELETE_FROMCART',
-        cartList : newCart
+        type : 'DELETE_ITEM_FROM_CART',
+        payload : itemId
     };
 };
 
@@ -36,6 +35,6 @@ export {
     menuLoaded,
     menuRequested,
     menuError, 
-    addToCard,
-    deleteFromCard
+    addItemToCart,
+    deleteItemFromCart
 }

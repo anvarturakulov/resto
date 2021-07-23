@@ -7,11 +7,6 @@ import {connect} from 'react-redux'
 
 class AppHeader extends Component {
     render() {
-        const {cartList} = this.props;
-        let total = cartList.reduce((sum,item) => {
-            return sum + item.price
-        },0)
-
         return (
             <header className="header">
                 <Link className="header__link" to="/">
@@ -19,7 +14,7 @@ class AppHeader extends Component {
                 </Link>
                 <Link className="header__link" to="/cart">
                     <img className="header__cart" src={cartIcon} alt="cart"></img>
-                    Total: {total} $
+                    Total: {this.props.totalPrice} $
                 </Link>
             </header>
         )
@@ -27,9 +22,9 @@ class AppHeader extends Component {
     
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({totalPrice}) => {
     return {
-        cartList : state.cart
+        totalPrice
     }
 }
 
